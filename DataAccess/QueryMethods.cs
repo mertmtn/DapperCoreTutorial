@@ -12,9 +12,9 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = "SELECT * FROM dbo.Categories " +
-                    "INNER JOIN dbo.Products " +
-                    "ON dbo.Categories.CategoryID = dbo.Products.CategoryID";
+                var query = @"SELECT * FROM dbo.Categories
+                    INNER JOIN dbo.Products
+                    ON dbo.Categories.CategoryID = dbo.Products.CategoryID";
 
                 var list = connection.Query<Product, Category, Product>(query, (urun, kat) =>
                 {
