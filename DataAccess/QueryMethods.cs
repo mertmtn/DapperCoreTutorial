@@ -76,15 +76,22 @@ namespace DataAccess
             }
         }
         public static List<Product> SPGetAllProducts()
-        {
+        {           
+           
+            /*
+             * Buffered Parametresi: Arabelleğe alınmış bir sorgu tüm okuyucuyu bir kerede döndürür.
+             * Bu çoğu senaryoda idealdir.
+                https://dapper-tutorial.net/buffered
+                Arabelleğe alınmamış bir sorgu akış olarak eşdeğerdir. Nesneleri yalnızca talep üzerine yüklersiniz. 
+                Bu, bellek kullanımını azaltmak için çok büyük bir sorgu için yararlı olabilir.*/
+            var query = "GetAllProducts";
+
             using (var connection = DbConnect.Connection)
             {
-                var query = "GetAllProducts";
-
-                var urunListesi = connection.Query<Product>(query, commandType: System.Data.CommandType.StoredProcedure).ToList();
+                var urunListesi = connection.Query<Product>(query, buffered: false).ToList();
 
                 return urunListesi;
-            }
+            } 
         }
 
         public static Product GetProductById(int id)
@@ -94,6 +101,8 @@ namespace DataAccess
                 var query = "Select * From Products Where ProductId=@ProductId";
 
                 return connection.QueryFirstOrDefault<Product>(query, new { ProductId = id });
+
+                //Diğer Query metotları da aşağıdaki gibidir.
                 //return connection.QueryFirst<Product>(query, new { ProductId = id });
                 //return connection.QuerySingle<Product>(query, new { ProductId = id });
                 //return connection.QuerySingleOrDefault<Product>(query, new { ProductId = id });
