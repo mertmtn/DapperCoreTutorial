@@ -2,7 +2,6 @@
 using Models;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
 namespace DataAccess
 {
@@ -23,7 +22,7 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                var reader = connection.ExecuteReader("GetAllProductsByCategoryId @CategoryId",  new { CategoryId = categoryId });
+                var reader = connection.ExecuteReader("GetAllProductsByCategoryId @CategoryId", new { CategoryId = categoryId });
                 var dataTable = new DataTable();
                 dataTable.Load(reader);
                 return dataTable;
@@ -50,9 +49,7 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = "INSERT INTO [dbo].[Categories]([CategoryName],[Description]) " +
-                    "VALUES (@CategoryName, @Description)";
-
+                var query = @"INSERT INTO [dbo].[Categories]([CategoryName],[Description]) VALUES (@CategoryName, @Description)";
                 return connection.Execute(query, new { CategoryName = kategori.CategoryName, Description = kategori.Description });
             }
         }
@@ -61,13 +58,8 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = "UPDATE [dbo].[Categories] " +
-                    "SET[CategoryName] =@CategoryName  ," +
-                    "[Description] = @Description " +
-                    "WHERE CategoryId=@CategoryId";
-
+                var query = @"UPDATE [dbo].[Categories] SET [CategoryName] =@CategoryName,[Description] = @Description WHERE CategoryId=@CategoryId";
                 return connection.Execute(query, new { CategoryName = kategori.CategoryName, Description = kategori.Description, CategoryId = id });
-
             }
         }
 
@@ -75,9 +67,7 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = "DELETE FROM [dbo].[Categories] " +
-                    "WHERE CategoryId=@CategoryId";
-
+                var query = @"DELETE FROM [dbo].[Categories] WHERE CategoryId=@CategoryId";
                 return connection.Execute(query, new { CategoryId = id });
             }
         }
@@ -86,9 +76,7 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = "DELETE FROM [dbo].[Categories] " +
-                    "WHERE CategoryId IN @CategoryId";
-
+                var query = @"DELETE FROM [dbo].[Categories] WHERE CategoryId IN @CategoryId";
                 return connection.Execute(query, new { CategoryId = idList });
             }
         }
@@ -98,9 +86,7 @@ namespace DataAccess
             using (var connection = DbConnect.Connection)
             {
                 var query = "AddCategory";
-
-                return connection.Execute(query, new { CategoryName = kategori.CategoryName, Description = kategori.Description }, commandType: System.Data.CommandType.StoredProcedure);
-
+                return connection.Execute(query, new { CategoryName = kategori.CategoryName, Description = kategori.Description }, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -111,22 +97,21 @@ namespace DataAccess
                 var query = "spAddCategoryGetCategoryId";
 
                 var parametreList = new DynamicParameters();
-                
+
                 parametreList.Add("@Description", dbType: DbType.String, value: kategori.Description, direction: ParameterDirection.Input);
                 parametreList.Add("@CategoryName", dbType: DbType.String, value: kategori.CategoryName, direction: ParameterDirection.Input);
                 parametreList.Add("@CategoryId", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 connection.Query<int>(query, parametreList, commandType: CommandType.StoredProcedure);
-                return parametreList.Get<int>("CategoryId");   
+                return parametreList.Get<int>("CategoryId");
             }
         }
-
 
         public static int AddManyCategories(List<Product> urunListesi)
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = "INSERT INTO [dbo].[Products]([ProductName],[UnitPrice],[UnitsInStock],CategoryID) " +
-                    "VALUES (@ProductName,@UnitPrice,@UnitsInStock,@CategoryID)";
+                var query = @"INSERT INTO [dbo].[Products]([ProductName],[UnitPrice],[UnitsInStock],CategoryID) 
+                    VALUES (@ProductName,@UnitPrice,@UnitsInStock,@CategoryID)";
 
                 foreach (var urun in urunListesi)
                 {

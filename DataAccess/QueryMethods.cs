@@ -25,12 +25,11 @@ namespace DataAccess
                 return list;
             }
         }
-
         public static List<Order> OrderOrderDetails()
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = "SELECT * FROM dbo.Products INNER JOIN  dbo.[Order Details] ON dbo.Products.ProductID = dbo.[Order Details].ProductID";
+                var query = @"SELECT * FROM dbo.Products INNER JOIN  dbo.[Order Details] ON dbo.Products.ProductID = dbo.[Order Details].ProductID";
 
                 var list = connection.Query<Order, OrderDetail, Order>(query, (siparis, siparisDetay) =>
                 {
@@ -41,7 +40,6 @@ namespace DataAccess
                 return list;
             }
         }
-
         public static List<dynamic> AnonymusList()
         {
             using (var connection = DbConnect.Connection)
@@ -51,7 +49,6 @@ namespace DataAccess
                 return urunListesi;
             }
         }
-
         public static ArrayList SelectMultipleQueries()
         {
             using (var connection = DbConnect.Connection)
@@ -65,7 +62,6 @@ namespace DataAccess
                 return new ArrayList() { productList, categoryList };
             }
         }
-
         public static List<Product> GetAllProducts()
         {
             using (var connection = DbConnect.Connection)
@@ -76,8 +72,7 @@ namespace DataAccess
             }
         }
         public static List<Product> SPGetAllProducts()
-        {           
-           
+        { 
             /*
              * Buffered Parametresi: Arabelleğe alınmış bir sorgu tüm okuyucuyu bir kerede döndürür.
              * Bu çoğu senaryoda idealdir.
@@ -88,12 +83,10 @@ namespace DataAccess
 
             using (var connection = DbConnect.Connection)
             {
-                var urunListesi = connection.Query<Product>(query, buffered: false).ToList();
-
-                return urunListesi;
+                var productList = connection.Query<Product>(query, buffered: false).ToList();
+                return productList;
             } 
         }
-
         public static Product GetProductById(int id)
         {
             using (var connection = DbConnect.Connection)
@@ -108,7 +101,6 @@ namespace DataAccess
                 //return connection.QuerySingleOrDefault<Product>(query, new { ProductId = id });
             }
         }
-
         public static Product SPGetProductById(int id)
         {
             using (var connection = DbConnect.Connection)
@@ -116,6 +108,15 @@ namespace DataAccess
                 var query = "GetProductById";
 
                 return connection.QueryFirstOrDefault<Product>(query, new { id = id }, commandType: System.Data.CommandType.StoredProcedure);
+            }
+        }
+        public static List<Product> GetProductsByIdList(params int [] idList)
+        {
+            using (var connection = DbConnect.Connection)
+            {
+                var query = "Select * From Products Where ProductId IN @ProductIdList";
+               
+                return connection.Query<Product>(query, new { ProductIdList = idList }).ToList();               
             }
         }
     }
