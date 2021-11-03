@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/37337606/140230965-3ea47932-bd0a-45bf-86b4-0e20d24462cc.png)
 
-DapperUnitTest.cs'de örnek testleri bulabilirsiniz. DataAccess projesinde ise QueryMethods ve ExecuteMethods dosyaları bulunur. Bu dosyalar sırasıyla Dapper'a ait Query ve Execute methodları barındırdığı için isimler bu şekilde ayrılmıştır. Ayrıca Asenkorn işlemleri de desteklediği için DapperAsyncMethods dosyası da bulunur. Models projesinde ise Northwind'e uyumlu entityler mevcuttur.(Products, Categories tabloları vs.)
+DapperUnitTest.cs'de örnek testleri bulabilirsiniz. DataAccess projesinde ise QueryMethods ve ExecuteMethods dosyaları bulunur. Bu dosyalar sırasıyla Dapper'a ait Query ve Execute methodları barındırdığı için isimler bu şekilde ayrılmıştır. Ayrıca Asenkron işlemleri de desteklediği için DapperAsyncMethods dosyası da bulunur. Models projesinde ise Northwind'e uyumlu entityler mevcuttur.(Products, Categories tabloları vs.)
 
 [EN] This project is Unit Test Project that runs DapperORM methods. It creates with .NET 5  Northwind used as example database.
 
