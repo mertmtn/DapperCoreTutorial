@@ -88,23 +88,7 @@ namespace DataAccess
                 var query = "AddCategory";
                 return connection.Execute(query, new { CategoryName = kategori.CategoryName, Description = kategori.Description }, commandType: CommandType.StoredProcedure);
             }
-        }
-
-        public static int GetLastInsertedCategoryId(Category kategori)
-        {
-            using (var connection = DbConnect.Connection)
-            {
-                var query = "spAddCategoryGetCategoryId";
-
-                var parametreList = new DynamicParameters();
-
-                parametreList.Add("@Description", dbType: DbType.String, value: kategori.Description, direction: ParameterDirection.Input);
-                parametreList.Add("@CategoryName", dbType: DbType.String, value: kategori.CategoryName, direction: ParameterDirection.Input);
-                parametreList.Add("@CategoryId", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                connection.Query<int>(query, parametreList, commandType: CommandType.StoredProcedure);
-                return parametreList.Get<int>("CategoryId");
-            }
-        }
+        } 
 
         public static int AddManyCategories(List<Product> urunListesi)
         {
