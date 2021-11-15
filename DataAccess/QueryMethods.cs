@@ -13,9 +13,9 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                var query = @"SELECT * FROM dbo.Categories
-                    INNER JOIN dbo.Products
-                    ON dbo.Categories.CategoryID = dbo.Products.CategoryID";
+                var query = @"SELECT * FROM dbo.Products
+                    INNER JOIN dbo.Categories
+                    ON dbo.Products.CategoryID = dbo.Categories.CategoryID";
 
                 var list = connection.Query<Product, Category, Product>(query, (urun, kat) =>
                 {
@@ -25,22 +25,39 @@ namespace DataAccess
 
                 return list;
             }
-        }
+        }       
+
         public static List<Order> OrderOrderDetails()
-        {
+        { 
             using (var connection = DbConnect.Connection)
             {
-                var query = @"SELECT * FROM dbo.Products INNER JOIN  dbo.[Order Details] ON dbo.Products.ProductID = dbo.[Order Details].ProductID";
+                var query = "SELECT TOP 10 * FROM Orders AS A INNER JOIN dbo.[Order Details] AS B ON A.OrderID = B.OrderID;";
 
-                var list = connection.Query<Order, OrderDetail, Order>(query, (siparis, siparisDetay) =>
-                {
-                    siparis.OrderDetails = siparisDetay;
-                    return siparis;
-                }, splitOn: "ProductID").ToList();
+                var orderDictionary = new Dictionary<int, Order>();
 
+                var list = connection.Query<Order, OrderDetail, Order>(
+                    query,
+                    (order, orderDetail) =>
+                    {
+                        Order orderEntry;
+
+                        if (!orderDictionary.TryGetValue(order.OrderID, out orderEntry))
+                        {
+                            orderEntry = order;
+                            orderEntry.OrderDetails = new List<OrderDetail>();
+                            orderDictionary.Add(orderEntry.OrderID, orderEntry);
+                        }
+
+                        orderEntry.OrderDetails.Add(orderDetail);
+                        return orderEntry;
+                    },
+                    splitOn: "OrderID")
+                .Distinct()
+                .ToList(); 
                 return list;
-            }
+            }           
         }
+
         public static List<dynamic> AnonymusList()
         {
             using (var connection = DbConnect.Connection)
@@ -73,7 +90,7 @@ namespace DataAccess
             }
         }
         public static List<Product> SPGetAllProducts()
-        { 
+        {
             /*
              * Buffered Parametresi: Arabelleğe alınmış bir sorgu tüm okuyucuyu bir kerede döndürür.
              * Bu çoğu senaryoda idealdir.
@@ -86,7 +103,7 @@ namespace DataAccess
             {
                 var productList = connection.Query<Product>(query, buffered: false).ToList();
                 return productList;
-            } 
+            }
         }
         public static Product GetProductById(int id)
         {
@@ -111,13 +128,13 @@ namespace DataAccess
                 return connection.QueryFirstOrDefault<Product>(query, new { id = id }, commandType: System.Data.CommandType.StoredProcedure);
             }
         }
-        public static List<Product> GetProductsByIdList(params int [] idList)
+        public static List<Product> GetProductsByIdList(params int[] idList)
         {
             using (var connection = DbConnect.Connection)
             {
                 var query = "Select * From Products Where ProductId IN @ProductIdList";
-               
-                return connection.Query<Product>(query, new { ProductIdList = idList }).ToList();               
+
+                return connection.Query<Product>(query, new { ProductIdList = idList }).ToList();
             }
         }
 

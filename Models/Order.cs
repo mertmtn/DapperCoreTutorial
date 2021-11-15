@@ -1,14 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Models
 {
     public class Order
-    {
-        public int OrderID { get; set; }
-
-        public string ProductName { get; set; }
-
-        public Product Products { get; set; }
+    {       
+        public int OrderID { get; set; }  
 
         public DateTime OrderDate { get; set; }
 
@@ -16,6 +13,6 @@ namespace Models
 
         public DateTime RequiredDate { get; set; }
 
-        public OrderDetail OrderDetails { get; set; }
+        public List<OrderDetail> OrderDetails { get; set; }
     }
 }

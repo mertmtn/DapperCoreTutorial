@@ -70,6 +70,13 @@ namespace DapperORMUnitTest
         }
 
         [TestMethod]
+        public void Should_Return_JoinListOfOrderOrderDetail()
+        {
+            var result = QueryMethods.OrderOrderDetails();
+            Assert.AreNotEqual(0, result.Count);
+        }
+
+        [TestMethod]
         public void Should_Return_MultipleQueries()
         {
             var result = QueryMethods.SelectMultipleQueries();
