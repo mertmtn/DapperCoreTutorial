@@ -25,10 +25,10 @@ namespace DataAccess
 
                 return list;
             }
-        }       
+        }
 
         public static List<Order> OrderOrderDetails()
-        { 
+        {
             using (var connection = DbConnect.Connection)
             {
                 var query = "SELECT TOP 10 * FROM Orders AS A INNER JOIN dbo.[Order Details] AS B ON A.OrderID = B.OrderID;";
@@ -53,9 +53,9 @@ namespace DataAccess
                     },
                     splitOn: "OrderID")
                 .Distinct()
-                .ToList(); 
+                .ToList();
                 return list;
-            }           
+            }
         }
 
         public static List<dynamic> AnonymusList()
@@ -89,6 +89,7 @@ namespace DataAccess
                 return urunListesi;
             }
         }
+
         public static List<Product> SPGetAllProducts()
         {
             /*
@@ -105,12 +106,12 @@ namespace DataAccess
                 return productList;
             }
         }
+
         public static Product GetProductById(int id)
         {
             using (var connection = DbConnect.Connection)
             {
                 var query = "Select * From Products Where ProductId=@ProductId";
-
                 return connection.QueryFirstOrDefault<Product>(query, new { ProductId = id });
 
                 //Diğer Query metotları da aşağıdaki gibidir.
@@ -119,6 +120,20 @@ namespace DataAccess
                 //return connection.QuerySingleOrDefault<Product>(query, new { ProductId = id });
             }
         }
+
+        /// <summary>
+        /// It supports .NET 6 Linq OrDefault enhancements. If it is not satisfied by criteria, be able to pass default value of Product.
+        /// </summary>
+        public static Product GetSingleProductOrDefaultById(int id)
+        {
+            using (var connection = DbConnect.Connection)
+            {
+                var query = "Select * From Products Where ProductId = @ProductId";
+
+                return connection.Query<Product>(query, new { ProductId = id }).SingleOrDefault(new Product { ProductId = 0, ProductName = "No Product" }); 
+            }
+        }
+
         public static Product SPGetProductById(int id)
         {
             using (var connection = DbConnect.Connection)

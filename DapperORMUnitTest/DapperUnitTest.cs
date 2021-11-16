@@ -51,15 +51,24 @@ namespace DapperORMUnitTest
         public void Should_Return_ProductList()
         {
             var result = QueryMethods.GetAllProducts();
+
             Assert.AreNotEqual(0, result.Count);
         }
 
         [TestMethod]
-        public void Should_Return_ProductId_5()
+        public void Should_Return_Product_ByProductId()
         {
             var productId = 5;
             var result = QueryMethods.GetProductById(productId);
             Assert.IsNotNull(result, "Result is null");
+        }
+
+        [TestMethod]
+        public void Should_Return_SingleOrDefaultProduct_ByProductId()
+        {
+            var productId = 500; //Product Id 500 is not available in Product Table
+            var result = QueryMethods.GetSingleProductOrDefaultById(productId);
+            Assert.IsTrue(result.ProductId == 0, result.ProductName);
         }
 
         [TestMethod]
