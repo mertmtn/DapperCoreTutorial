@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Dapper.Contrib.Extensions;
+using System;
 using System.Collections.Generic;
 
 namespace Models
 {
-    public class Order
-    {       
+    [Table("Orders")]
+    public class Order : IEntity
+    {
+        [Key]
         public int OrderID { get; set; }  
 
         public DateTime OrderDate { get; set; }

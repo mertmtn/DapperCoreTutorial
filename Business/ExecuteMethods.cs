@@ -1,9 +1,9 @@
 ﻿using Dapper;
+using DataAccess;
 using Models;
-using System.Collections.Generic;
 using System.Data;
 
-namespace DataAccess
+namespace Business
 {
     public class ExecuteMethods
     {

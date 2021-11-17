@@ -1,11 +1,10 @@
 ﻿using Dapper;
+using DataAccess;
 using Models;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 
-namespace DataAccess
+namespace Business
 {
     public static class QueryMethods
     {

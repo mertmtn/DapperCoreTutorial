@@ -1,6 +1,8 @@
-﻿namespace Models
+﻿using Dapper.Contrib.Extensions;
+
+namespace Models
 {
-    public class OrderDetail
+    public class OrderDetail : IEntity
     { 
         public int OrderID { get; set; }
 

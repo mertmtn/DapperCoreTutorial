@@ -1,12 +1,10 @@
 ﻿using Dapper;
+using DataAccess;
 using Models;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace DataAccess
+namespace Business
 {
     public class DapperAsyncMethods
     {
