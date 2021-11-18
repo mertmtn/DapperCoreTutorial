@@ -47,7 +47,7 @@ namespace DataAccess
         {
             using (var connection = DbConnect.Connection)
             {
-                connection.Update(filter);
+                connection.Update(entity);
             }
         }
     }
