@@ -56,6 +56,15 @@ namespace DapperORMUnitTest
         }
 
         [TestMethod]
+        public void Should_Return_ProductList_ByTopCount()
+        {
+            var topCount = 5;
+            var result = QueryMethods.GetAllProductsWithTopCount(topCount);
+
+            Assert.AreNotEqual(0, result.Count);
+        }
+
+        [TestMethod]
         public void Should_Return_Product_ByProductId()
         {
             var productId = 5;

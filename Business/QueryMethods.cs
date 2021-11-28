@@ -8,6 +8,23 @@ namespace Business
 {
     public static class QueryMethods
     {
+        public static List<Product> GetAllProductsWithTopCount(int topCount)
+        {
+            using (var connection = DbConnect.Connection)
+            {
+                //There is two types of usage for TOP keyword on SQL
+
+                //Literal replacements
+                //Source: https://github.com/DapperLib/Dapper/blob/main/Readme.md#literal-replacements
+                //var productList = connection.Query<Product>("SELECT TOP {=TopCount} * FROM Products", new { topCount }).ToList();
+
+                //Send as a parameter (Clasic way)
+                var productList = connection.Query<Product>("SELECT TOP (@TopCount) * FROM Products", new { TopCount=topCount }).ToList();
+
+                return productList;
+            }
+        }
+
         public static List<Product> ProductCategory()
         {
             using (var connection = DbConnect.Connection)
