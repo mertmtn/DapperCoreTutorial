@@ -1,4 +1,4 @@
-[TR] Dapper ORM'ine ait metotları barındıran unit test projesidir. .NET 6 alt yapısına sahiptir. Northwind veritabanı kullanılmıştır.
+[TR] Dapper ORM'ine ait metotları barındıran unit test projesidir. .NET 10 alt yapısına sahiptir. Northwind veritabanı kullanılmıştır.
 16.02.2026 tarihinde bütün projeleri .NET 10'ya yükselttim. 
 
 ![image](https://user-images.githubusercontent.com/37337606/142294982-6bb3b34c-a549-4700-a13d-f2a77e81c2fa.png)
