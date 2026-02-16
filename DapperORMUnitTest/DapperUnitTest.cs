@@ -136,7 +136,7 @@ namespace DapperORMUnitTest
         public async Task Should_Return_JoinListOfProductCategory_Async()
         {
             var result = (await DapperAsyncMethods.ProductCategoryAsync()).ToList();
-            Assert.AreNotEqual(0, result);
+            Assert.AreNotEqual(0, result.Count);
         }
 
         [TestMethod]
