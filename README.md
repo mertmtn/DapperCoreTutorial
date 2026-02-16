@@ -1,5 +1,5 @@
 [TR] Dapper ORM'ine ait metotları barındıran unit test projesidir. .NET 6 alt yapısına sahiptir. Northwind veritabanı kullanılmıştır.
-15.11.2021'de bütün projeleri .NET 6'ya yükselttim. 
+16.02.2026 tarihinde bütün projeleri .NET 10'ya yükselttim. 
 
 ![image](https://user-images.githubusercontent.com/37337606/142294982-6bb3b34c-a549-4700-a13d-f2a77e81c2fa.png)
 
@@ -23,8 +23,8 @@ Generic repository metotlarını kullanacak iş metotları, her entity için Abs
 
 Models projesinde ise Northwind'e uyumlu entityler mevcuttur.(Products, Categories tabloları vs.)
 
-[EN] This project is Unit Test Project that runs DapperORM methods. It creates with .NET 6  Northwind used as example database.
-In 15.11.2021, all class libraries migrated from .NET 5 to .NET 6 
+[EN] This project is Unit Test Project that runs DapperORM methods. It creates with .NET 10 Northwind used as example database.
+On 16.02.2026, all class libraries migrated from .NET 6 to .NET 10
 
 DapperUnitTest.cs has sample tests for some Dapper methods from Business project. 
 
